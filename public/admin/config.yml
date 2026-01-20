@@ -1,0 +1,19 @@
+backend:
+  name: git-gateway
+  branch: main # or master, depending on your repo
+
+media_folder: "public/images/uploads" # Where images go
+public_folder: "/images/uploads"      # How they are accessed
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog" # Astro's content folder
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Body", name: "body", widget: "markdown"}
