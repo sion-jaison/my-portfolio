@@ -1,19 +1,21 @@
 backend:
   name: git-gateway
-  branch: main # or master, depending on your repo
+  branch: main
 
-media_folder: "public/images/uploads" # Where images go
-public_folder: "/images/uploads"      # How they are accessed
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "blog"
     label: "Blog"
-    folder: "src/content/blog" # Astro's content folder
+    folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
+      # Astro requires these exact field names:
       - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Featured Image", name: "image", widget: "image"}
+      - {label: "Description", name: "description", widget: "text"} 
+      - {label: "Publish Date", name: "pubDate", widget: "datetime"} 
+      - {label: "Hero Image", name: "heroImage", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
