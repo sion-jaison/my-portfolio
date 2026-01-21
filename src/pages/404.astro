@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 | System Failure">
+  <main class="h-screen flex flex-col items-center justify-center text-center p-6">
+    <div class="font-mono text-red-500 text-6xl mb-4 animate-pulse">404</div>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">Security Breach Detected</h1>
+    <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md">
+        The requested resource path is corrupted or restricted. Initiate protocol return_home immediately.
+    </p>
+    
+    <div class="bg-black/5 dark:bg-white/5 p-4 rounded-lg font-mono text-sm text-left mb-8 w-full max-w-md border border-gray-200 dark:border-[#333]">
+        <p class="text-green-500">$ trace route</p>
+        <p class="text-gray-400"> > Error: Destination unreachable</p>
+        <p class="text-gray-400"> > Packet lost at /unknown_url</p>
+        <p class="text-gray-400 animate-pulse"> > _</p>
+    </div>
+
+    <a href="/" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-500 transition shadow-lg shadow-indigo-500/20">
+        Return to Safety
+    </a>
+  </main>
+</Layout>
