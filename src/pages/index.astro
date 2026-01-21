@@ -1,118 +1,28 @@
----
-import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const latestPost = posts[0];
-
-const experience = [
-  { role: "Network Security Analyst", company: "Tech Solutions Inc.", date: "2024 - Present", logo: "/company1.png", desc: "Orchestrating gateway security policies, automating threat detection with Python, and reducing incident response time by 40%." },
-  { role: "Linux System Administrator", company: "DataCorp Halifax", date: "2022 - 2024", logo: "/company2.png", desc: "Managed 50+ RHEL servers, optimized Apache/Nginx configurations, and deployed automated backup solutions using Bash." },
-];
-
-const certifications = [
-  { name: "CompTIA Security+", issuer: "CompTIA", date: "2024", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/CompTIA_Security%2B.svg/1200px-CompTIA_Security%2B.svg.png", color: "bg-red-500" },
-  { name: "AWS Solutions Architect", issuer: "AWS", date: "2023", logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg", color: "bg-orange-500" },
-  { name: "Cisco CCNA", issuer: "Cisco", date: "2022", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", color: "bg-blue-500" },
-  { name: "Red Hat Admin", issuer: "Red Hat", date: "2021", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Red_Hat_logo.svg/1200px-Red_Hat_logo.svg.png", color: "bg-red-700" }
-];
-
-const techStack = ["Python", "Linux", "Docker", "Kubernetes", "Ansible", "Bash", "Network Security", "Wireshark", "n8n", "Git", "AWS", "Terraform"];
----
-
-<Layout title="Sion Jaison | Developer">
-  <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 reveal">
-    <div class="bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl border border-gray-200 dark:border-[#2a2a2a] px-8 py-3 rounded-full flex gap-8 items-center shadow-2xl transition-all duration-300">
-      <a href="/" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">HOME</a>
-      <a href="/about" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">ALL</a>
-      <a href="/blog" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">BLOG</a>
-      <div class="w-px h-4 bg-gray-300 dark:bg-gray-700"></div>
-      <button id="themeToggle" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#1f1f1f] flex items-center justify-center text-gray-600 dark:text-yellow-400 hover:scale-110 transition border border-gray-200 dark:border-[#333]">
-        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-      </button>
-    </div>
-  </nav>
-
-  <main class="max-w-[1100px] mx-auto px-6 pb-32 pt-40">
-    <div class="text-center mb-24 reveal">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-500 text-xs font-bold uppercase tracking-widest mb-6"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span></span>Available for hire</div>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-6 leading-tight">Protecting Networks.<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 animate-gradient bg-300%">Automating Chaos.</span></h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">I help companies secure their infrastructure and streamline workflows using Python, Linux, and modern automation tools.</p>
-        <div class="flex justify-center gap-4"><a href="/resume.pdf" download class="group flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition shadow-2xl shadow-indigo-500/20">Download Resume</a><a href="#contact" class="flex items-center gap-2 bg-gray-100 dark:bg-[#1f1f1f] text-gray-900 dark:text-white px-8 py-4 rounded-full font-bold hover:bg-gray-200 dark:hover:bg-[#2a2a2a] transition border border-gray-200 dark:border-[#333]">Contact Me</a></div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-5" id="bento-grid">
-      <div class="spotlight-card reveal md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-[2.5rem] border border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#0a0a0a]">
-        <img src="/me.jpg" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105 opacity-100" onerror="this.src='https://ui-avatars.com/api/?name=Sion+Jaison&background=0a0a0a&color=fff&size=512'"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 p-8"><h2 class="text-3xl font-bold text-white tracking-tight">Sion Jaison</h2><p class="text-gray-300 mt-1 font-mono text-sm">Full Stack Developer</p></div>
-      </div>
-
-      <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] relative overflow-hidden group min-h-[220px]">
-        <div class="absolute inset-0 opacity-40 dark:opacity-30 dark:grayscale dark:invert dark:contrast-125 transition duration-500 group-hover:scale-110"><iframe width="100%" height="100%" frameborder="0" scrolling="no" src="https://maps.google.com/maps?q=Halifax,+Nova+Scotia&t=&z=13&ie=UTF8&iwloc=&output=embed" class="w-full h-full" style="filter: grayscale(1);"></iframe></div>
-        <div class="absolute bottom-6 left-6 z-10"><div class="flex items-center gap-2 mb-2"><div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div><span class="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Halifax, NS</span></div><h3 class="text-gray-900 dark:text-white font-bold text-3xl font-mono" id="halifax-clock">--:--</h3></div>
-      </div>
-
-      <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-6 flex flex-col justify-center gap-3">
-         <a href="https://github.com/sion-jaison" target="_blank" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition group">
-            <div class="w-10 h-10 bg-gray-100 dark:bg-[#1f1f1f] rounded-full flex items-center justify-center group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            </div>
-            <span class="font-bold text-gray-700 dark:text-gray-300 text-sm">GitHub</span>
-         </a>
-         <a href="https://linkedin.com/in/sion-jaison-226a091a2" target="_blank" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition group">
-            <div class="w-10 h-10 bg-gray-100 dark:bg-[#1f1f1f] rounded-full flex items-center justify-center group-hover:bg-[#0077b5] group-hover:text-white transition">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </div>
-            <span class="font-bold text-gray-700 dark:text-gray-300 text-sm">LinkedIn</span>
-         </a>
-         <a href="mailto:sionjaison@gmail.com" class="flex items-center gap-4 p-3 rounded-2xl hover:bg-gray-50 dark:hover:bg-[#1f1f1f] transition group">
-            <div class="w-10 h-10 bg-gray-100 dark:bg-[#1f1f1f] rounded-full flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            </div>
-            <span class="font-bold text-gray-700 dark:text-gray-300 text-sm">Email</span>
-         </a>
-      </div>
-
-      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-8 flex flex-col justify-center overflow-hidden">
-        <h3 class="text-gray-500 dark:text-gray-400 font-bold text-xs uppercase tracking-widest mb-6 text-center">Technologies & Tools</h3>
-        <div class="relative flex overflow-x-hidden"><div class="animate-marquee whitespace-nowrap flex gap-8">{[...techStack, ...techStack].map((tech) => <span class="text-xl font-bold text-gray-300 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-white transition cursor-default">{tech}</span>)}</div><div class="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-8">{[...techStack, ...techStack].map((tech) => <span class="text-xl font-bold text-gray-300 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-white transition cursor-default">{tech}</span>)}</div></div>
-      </div>
-
-      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-8 md:p-12">
-        <div class="flex items-center justify-between mb-10"><h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-4"><span class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-500 text-lg">💼</span> Experience</h2><a href="/resume.pdf" class="text-sm font-bold text-indigo-500 hover:underline">View Full Resume</a></div>
-        <div class="space-y-12">{experience.map((job) => <div class="flex flex-col md:flex-row gap-6 relative group"><div class="hidden md:block absolute left-[31px] top-20 bottom-[-48px] w-px bg-gray-200 dark:bg-[#1f1f1f] group-last:hidden"></div><div class="flex-shrink-0 z-10"><div class="w-16 h-16 bg-white dark:bg-[#1f1f1f] rounded-2xl border border-gray-200 dark:border-[#333] p-3 shadow-lg flex items-center justify-center"><img src={job.logo} alt={job.company} class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" onerror="this.src='https://ui-avatars.com/api/?name=C&background=random'"/></div></div><div class="flex-grow pt-1"><div class="flex flex-col md:flex-row md:items-center justify-between mb-2"><div><h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-500 transition">{job.role}</h3><p class="text-indigo-500 font-medium">{job.company}</p></div><span class="text-gray-500 text-xs font-mono font-bold bg-gray-100 dark:bg-[#1f1f1f] px-3 py-1 rounded-full">{job.date}</span></div><p class="text-gray-600 dark:text-gray-400 leading-relaxed text-base mt-3">{job.desc}</p></div></div>)}</div>
-      </div>
-
-      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-10">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-4"><span class="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 text-lg">📜</span> Certifications</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">{certifications.map((cert) => <div class="bg-gray-50 dark:bg-[#111] border border-gray-100 dark:border-[#1f1f1f] p-5 rounded-3xl flex items-center gap-4 hover:border-indigo-500 dark:hover:border-indigo-500 transition duration-300 group cursor-default"><div class="w-12 h-12 bg-white dark:bg-[#1a1a1a] rounded-xl flex items-center justify-center p-2 shadow-sm border border-gray-100 dark:border-[#2a2a2a]"><img src={cert.logo} class="w-full h-full object-contain grayscale group-hover:grayscale-0 transition duration-300" onerror="this.style.display='none';"/></div><div><h4 class="text-gray-900 dark:text-white font-bold text-sm leading-tight group-hover:text-indigo-500 transition">{cert.name}</h4><p class="text-gray-500 text-xs mt-1 font-semibold">{cert.issuer}</p></div></div>)}</div>
-      </div>
-
-      <a href="/blog" class="spotlight-card reveal md:col-span-2 bg-gradient-to-br from-indigo-900 to-black border border-indigo-800 rounded-[2.5rem] p-8 flex flex-col justify-between hover:scale-[1.02] transition duration-300 group relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        <div><span class="inline-block px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/50 text-indigo-300 text-xs font-bold mb-4">LATEST POST</span><h3 class="text-2xl font-bold text-white mb-2 leading-tight group-hover:underline decoration-indigo-400 underline-offset-4">{latestPost ? latestPost.data.title : "Read My Thoughts on Security"}</h3></div>
-        <div class="flex items-center gap-2 text-indigo-300 text-sm font-bold mt-6">Read Article <span class="group-hover:translate-x-1 transition">→</span></div>
-      </a>
-
-      <div id="contact" class="spotlight-card reveal md:col-span-2 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-10 flex flex-col justify-center">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Let's Talk.</h2>
-        <form name="contact" method="POST" data-netlify="true" class="space-y-3 mt-4"><input type="email" name="email" placeholder="Your Email" class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-[#111] border border-gray-200 dark:border-[#2a2a2a] focus:border-indigo-500 focus:outline-none dark:text-white transition"/><textarea name="message" placeholder="Message" rows="2" class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-[#111] border border-gray-200 dark:border-[#2a2a2a] focus:border-indigo-500 focus:outline-none dark:text-white transition"></textarea><button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-indigo-500/20">Send</button></form>
-      </div>
-    </div>
-  </main>
-  
-  <script is:inline>
-    // Theme Logic - using astro:page-load handled in Layout, but we need the click listener for toggle
+<script is:inline>
+    // Robust Theme Toggle
     document.addEventListener('astro:page-load', () => {
-        document.getElementById("themeToggle").addEventListener("click", () => { 
-            const el = document.documentElement; el.classList.toggle("dark"); 
-            localStorage.setItem("theme", el.classList.contains("dark") ? "dark" : "light"); 
-        });
+        const toggleBtn = document.getElementById("themeToggle");
         
-        setInterval(() => { const c = document.getElementById('halifax-clock'); if(c) c.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Halifax', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date()); }, 1000);
+        if(toggleBtn) {
+            toggleBtn.addEventListener("click", () => { 
+                const el = document.documentElement;
+                
+                // Toggle Class
+                el.classList.toggle("dark");
+                
+                // Save Preference
+                const newTheme = el.classList.contains("dark") ? "dark" : "light";
+                localStorage.setItem("theme", newTheme);
+            });
+        }
         
+        // Clock Logic
+        setInterval(() => { 
+            const c = document.getElementById('halifax-clock'); 
+            if(c) c.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Halifax', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date()); 
+        }, 1000);
+        
+        // Spotlight Logic
         const cards = document.querySelectorAll('.spotlight-card');
         document.addEventListener('mousemove', (e) => {
           for (const card of cards) {
@@ -125,13 +35,3 @@ const techStack = ["Python", "Linux", "Docker", "Kubernetes", "Ansible", "Bash",
         });
     });
   </script>
-  <style>
-    .spotlight-card { position: relative; }
-    :global(.dark) .spotlight-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 2.5rem; background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%); opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 2; }
-    :global(.dark) .spotlight-card:hover::before { opacity: 1; }
-    .animate-marquee { animation: marquee 25s linear infinite; } .animate-marquee2 { animation: marquee2 25s linear infinite; }
-    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } } @keyframes marquee2 { 0% { transform: translateX(100%); } 100% { transform: translateX(0%); } }
-    .bg-300% { background-size: 300% 300%; } .animate-gradient { animation: gradient 8s ease infinite; }
-    @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-  </style>
-</Layout>
