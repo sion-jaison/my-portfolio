@@ -1,124 +1,116 @@
 ---
-// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 
-// Your Real Data
+// Your Projects Data
 const projects = [
   {
-    title: "Gateway Tools",
-    desc: "Custom troubleshooting for servers using Python & Perl.",
-    tag: "Security",
-    color: "bg-orange-500"
+    title: "Gateway Server Tool",
+    desc: "Python & Perl troubleshooting utility for network gateways.",
+    tags: ["Security", "Linux"],
+    color: "bg-orange-500",
+    link: "#"
   },
   {
     title: "Winterfell Audio",
-    desc: "AI-generated branding and logo design.",
-    tag: "Design",
-    color: "bg-blue-500"
+    desc: "AI-generated branding & logo design assets.",
+    tags: ["Design", "AI"],
+    color: "bg-indigo-500",
+    link: "#"
   },
   {
-    title: "VulnMonitor",
-    desc: "Automated vulnerability scanning with n8n.",
-    tag: "Automation",
-    color: "bg-emerald-500"
-  },
-  {
-    title: "TMUX Config",
-    desc: "Optimized workstation setup for speed.",
-    tag: "DevOps",
-    color: "bg-purple-500"
+    title: "VulnMonitor Automation",
+    desc: "Automated vulnerability scanning workflow using n8n.",
+    tags: ["Automation", "n8n"],
+    color: "bg-emerald-500",
+    link: "#"
   }
 ];
+
+const techStack = ["Python", "Linux", "Docker", "Astro", "Tailwind", "Bash", "Network Security", "Git"];
 ---
 
-<Layout title="Jaison | Developer">
+<Layout title="Sion Jaison | Developer">
   
-  <main class="max-w-[1200px] mx-auto px-6 py-20">
+  <main class="max-w-[1100px] mx-auto px-6 py-20">
     
-    <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-5">
 
-      <div class="md:col-span-2 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-10 flex flex-col justify-between hover:border-slate-600 transition duration-500 relative overflow-hidden group">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-        
-        <div>
-          <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center mb-6 text-white font-bold text-xl">J</div>
-          <h1 class="text-4xl font-bold text-white mb-4 leading-tight">
-            Building secure networks & <span class="text-indigo-400">automation systems.</span>
-          </h1>
-          <p class="text-gray-400 text-lg">
-            Hi, I'm Jaison. A developer specializing in server administration, Python scripts, and cybersecurity tools.
-          </p>
+      <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-[2rem] border border-[#2a2a2a] bg-[#1c1c1c]">
+        <img 
+            src="/me.jpg" 
+            alt="Sion Jaison" 
+            class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+            onerror="this.src='https://ui-avatars.com/api/?name=Sion+Jaison&background=random&size=512'"
+        />
+        <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black/90 to-transparent w-full">
+            <h1 class="text-4xl font-bold text-white tracking-tight">Sion Jaison</h1>
+            <p class="text-gray-300 mt-2 font-mono text-sm">Full Stack Developer & Security Enthusiast</p>
         </div>
       </div>
 
-      <div class="bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-between hover:border-slate-600 transition duration-500">
-        <div class="flex justify-between items-start">
-            <span class="text-6xl">🌍</span>
-            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                <span class="text-xs font-bold text-green-400 uppercase tracking-wider">Available</span>
-            </div>
+      <div class="md:col-span-1 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-between hover:border-slate-600 transition duration-500 min-h-[200px]">
+        <div class="w-10 h-10 bg-[#2a2a2a] rounded-full flex items-center justify-center text-xl">
+            📍
         </div>
         <div>
-            <h3 class="text-white text-xl font-bold mt-4">Based in Canada</h3>
-            <p class="text-gray-500 text-sm">Open to remote work</p>
+            <h3 class="text-white font-bold text-lg">Based in</h3>
+            <p class="text-gray-400">Canada 🇨🇦</p>
         </div>
       </div>
 
-      <div class="bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-center gap-4 hover:border-slate-600 transition duration-500">
-        <a href="https://github.com/sion-jaison" target="_blank" class="flex items-center gap-4 text-gray-400 hover:text-white transition group">
-            <div class="w-10 h-10 bg-[#2a2a2a] rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      <div class="md:col-span-1 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center gap-4 hover:border-slate-600 transition duration-500">
+        <a href="https://github.com/sion-jaison" target="_blank" class="flex items-center gap-3 text-gray-400 hover:text-white transition group">
+            <div class="w-8 h-8 bg-[#2a2a2a] rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             </div>
-            <span class="font-bold">GitHub</span>
+            <span class="font-bold text-sm">GitHub</span>
         </a>
-        <a href="mailto:sionjaison@gmail.com" class="flex items-center gap-4 text-gray-400 hover:text-white transition group">
-            <div class="w-10 h-10 bg-[#2a2a2a] rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        <a href="mailto:sionjaison@gmail.com" class="flex items-center gap-3 text-gray-400 hover:text-white transition group">
+            <div class="w-8 h-8 bg-[#2a2a2a] rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             </div>
-            <span class="font-bold">Email</span>
+            <span class="font-bold text-sm">Email Me</span>
         </a>
-      </div>
+    </div>
 
-      <div class="md:col-span-2 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 hover:border-slate-600 transition duration-500">
-        <h3 class="text-white text-xl font-bold mb-6">Tech Stack</h3>
-        <div class="flex flex-wrap gap-3">
-            {["Python", "Linux Admin", "CGI Scripting", "n8n", "Docker", "Network Security", "Astro", "Tailwind"].map((tech) => (
-                <span class="bg-[#2a2a2a] text-slate-300 px-4 py-2 rounded-xl text-sm font-semibold border border-transparent hover:border-indigo-500 hover:text-white transition cursor-default">
+    <div class="md:col-span-2 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-center gap-4 hover:border-slate-600 transition duration-500 overflow-hidden relative">
+        <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest mb-2">My Stack</h3>
+        <div class="flex flex-wrap gap-2">
+            {techStack.map((tech) => (
+                <span class="px-3 py-1 rounded-full bg-[#2a2a2a] border border-[#333] text-gray-300 text-sm font-medium hover:border-white hover:text-white transition cursor-default">
                     {tech}
                 </span>
             ))}
         </div>
-      </div>
+    </div>
 
-      {projects.map((project) => (
-          <div class="bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-between hover:border-slate-600 transition duration-500 group cursor-pointer">
+    <div class="md:col-span-2 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-center hover:border-slate-600 transition duration-500">
+        <h2 class="text-2xl font-bold text-white mb-4">Building logic out of chaos.</h2>
+        <p class="text-gray-400 leading-relaxed">
+            I specialize in server administration, automation scripts, and security workflows. 
+            Currently optimizing networks and building custom tools for gateway servers.
+        </p>
+    </div>
+
+    {projects.map((project) => (
+        <a href={project.link} class="group md:col-span-1 bg-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-between hover:border-indigo-500 transition duration-500 min-h-[200px]">
             <div>
-                <div class={`w-12 h-12 rounded-2xl ${project.color} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition duration-300`}>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class={`w-10 h-10 rounded-full ${project.color} flex items-center justify-center text-white mb-4 shadow-lg group-hover:scale-110 transition duration-300`}>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
-                <h4 class="text-white text-xl font-bold mb-2">{project.title}</h4>
-                <p class="text-gray-500 text-sm">{project.desc}</p>
+                <h4 class="text-white font-bold text-lg leading-tight mb-2">{project.title}</h4>
+                <p class="text-gray-500 text-xs leading-relaxed">{project.desc}</p>
             </div>
-            <div class="mt-6 flex justify-between items-center">
-                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">{project.tag}</span>
-                <span class="w-8 h-8 rounded-full bg-[#2a2a2a] flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition">
-                    ↗
-                </span>
-            </div>
-          </div>
-      ))}
-
-      <div class="md:col-span-2 bg-gradient-to-br from-indigo-900 to-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-center items-center text-center hover:border-indigo-400 transition duration-500">
-        <h3 class="text-2xl font-bold text-white mb-2">Read my Blog</h3>
-        <p class="text-indigo-200 mb-6 max-w-md">Thoughts on cybersecurity, server troubleshooting, and automation workflows.</p>
-        <a href="/blog/hello-world" class="bg-white text-indigo-900 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition">
-            View Articles
         </a>
-      </div>
+    ))}
+
+      <a href="/blog/hello-world" class="md:col-span-1 bg-gradient-to-br from-indigo-900 to-[#1c1c1c] border border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center items-center text-center hover:scale-[1.02] transition duration-300 group">
+        <span class="text-indigo-300 font-mono text-xs mb-2">Latest Posts</span>
+        <h3 class="text-xl font-bold text-white mb-1 group-hover:underline decoration-indigo-400 underline-offset-4">Read the Blog</h3>
+        <div class="mt-4 w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition">
+            →
+        </div>
+      </a>
 
     </div>
   </main>
