@@ -2,20 +2,55 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 collections:
+  # 1. BLOG
   - name: "blog"
-    label: "Blog"
+    label: "📝 Blog Posts"
     folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      # Astro requires these exact field names:
-      - {label: "Layout", name: "layout", widget: "hidden", default: "blog"}
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Description", name: "description", widget: "text"} 
       - {label: "Publish Date", name: "pubDate", widget: "datetime"} 
       - {label: "Hero Image", name: "heroImage", widget: "image", required: false}
       - {label: "Body", name: "body", widget: "markdown"}
+
+  # 2. MUSIC (Upload MP3s)
+  - name: "music"
+    label: "🎧 Music Tracks"
+    folder: "src/content/music"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Track Title", name: "title", widget: "string"}
+      - {label: "Audio File", name: "audio", widget: "file"}
+      - {label: "Duration (e.g. 3:45)", name: "duration", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+
+  # 3. PHOTOGRAPHY (Upload JPGs)
+  - name: "photos"
+    label: "📸 Photography"
+    folder: "src/content/photos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Caption", name: "title", widget: "string"}
+      - {label: "Photo", name: "image", widget: "image"}
+      - {label: "Camera Settings (e.g. Sony A7III)", name: "camera", widget: "string", required: false}
+      - {label: "Date", name: "date", widget: "datetime"}
+
+  # 4. VIDEOS (YouTube Links or files)
+  - name: "videos"
+    label: "🎬 Videos"
+    folder: "src/content/videos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Video Title", name: "title", widget: "string"}
+      - {label: "Thumbnail Image", name: "thumbnail", widget: "image"}
+      - {label: "Video Link (YouTube/Vimeo)", name: "link", widget: "string"}
+      - {label: "Date", name: "date", widget: "datetime"}

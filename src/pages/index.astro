@@ -1,43 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// 1. DATA: EXPERIENCE
+// FETCH LATEST BLOG POST
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const latestPost = posts[0];
+
+// DATA: EXPERIENCE
 const experience = [
-  {
-    role: "Network Security Analyst",
-    company: "Tech Solutions Inc.",
-    date: "2024 - Present",
-    logo: "/company1.png", // Make sure these files are in /public
-    desc: "Managing gateway servers, configuring firewalls, and automating security sweeps using Python & n8n."
-  },
-  {
-    role: "Linux System Administrator",
-    company: "DataCorp Halifax",
-    date: "2022 - 2024",
-    logo: "/company2.png",
-    desc: "Optimized server uptime, handled CPANEL troubleshooting, and wrote bash scripts for automated backups."
-  },
+  { role: "Network Security Analyst", company: "Tech Solutions Inc.", date: "2024 - Present", logo: "/company1.png", desc: "Managing gateway servers, configuring firewalls, and automating security sweeps using Python & n8n." },
+  { role: "Linux System Administrator", company: "DataCorp Halifax", date: "2022 - 2024", logo: "/company2.png", desc: "Optimized server uptime, handled CPANEL troubleshooting, and wrote bash scripts for automated backups." },
 ];
 
-// 2. DATA: CERTIFICATIONS
+// DATA: CERTIFICATIONS
 const certifications = [
-  { name: "CompTIA Security+", issuer: "CompTIA", date: "2024", logo: "/cert-secplus.png", color: "bg-red-500" },
-  { name: "AWS Solutions Architect", issuer: "AWS", date: "2023", logo: "/cert-aws.png", color: "bg-orange-500" },
-  { name: "Cisco CCNA", issuer: "Cisco", date: "2022", logo: "/cert-cisco.png", color: "bg-blue-500" },
-  { name: "Red Hat Admin", issuer: "Red Hat", date: "2021", logo: "/cert-redhat.png", color: "bg-red-700" }
+  { name: "CompTIA Security+", issuer: "CompTIA", date: "2024", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/CompTIA_Security%2B.svg/1200px-CompTIA_Security%2B.svg.png", color: "bg-red-500" },
+  { name: "AWS Solutions Architect", issuer: "AWS", date: "2023", logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg", color: "bg-orange-500" },
+  { name: "Cisco CCNA", issuer: "Cisco", date: "2022", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", color: "bg-blue-500" },
+  { name: "Red Hat Admin", issuer: "Red Hat", date: "2021", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Red_Hat_logo.svg/1200px-Red_Hat_logo.svg.png", color: "bg-red-700" }
 ];
 
 const techStack = ["Python", "Linux", "Docker", "Astro", "Tailwind", "Bash", "Network Security", "Git"];
 ---
 
 <Layout title="Sion Jaison | Developer">
-  
   <nav class="fixed top-0 left-0 right-0 z-40 flex justify-center pt-6 reveal">
     <div class="bg-white/80 dark:bg-[#1c1c1c]/80 backdrop-blur-md border border-gray-200 dark:border-[#2a2a2a] px-6 py-3 rounded-full flex gap-6 items-center shadow-lg transition-colors duration-300">
       <a href="/" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">HOME</a>
-      <a href="/blog/hello-world" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">BLOG</a>
+      <a href="/blog" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">BLOG</a>
       <a href="/about" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">ABOUT</a>
-      
       <button id="themeToggle" class="ml-2 w-8 h-8 rounded-full bg-gray-100 dark:bg-[#333] flex items-center justify-center text-gray-600 dark:text-yellow-400 hover:scale-110 transition">
         <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -46,123 +37,94 @@ const techStack = ["Python", "Linux", "Docker", "Astro", "Tailwind", "Bash", "Ne
   </nav>
 
   <main class="max-w-[1100px] mx-auto px-6 py-32">
-    
     <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-5" id="bento-grid">
-
-      <div class="spotlight-card reveal md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-[2rem] border border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1c1c1c] transition-colors duration-300">
-        <img src="/me.jpg" alt="Sion Jaison" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105 opacity-90 dark:opacity-80 group-hover:opacity-100" onerror="this.src='https://ui-avatars.com/api/?name=Sion+Jaison&background=random&size=512'" />
+      
+      <div class="spotlight-card reveal md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-[2rem] border border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1c1c1c]">
+        <img src="/me.jpg" class="absolute inset-0 w-full h-full object-cover opacity-90 dark:opacity-80 transition duration-700 group-hover:scale-105" onerror="this.src='https://ui-avatars.com/api/?name=Sion+Jaison&background=random&size=512'"/>
         <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-white/90 dark:from-black/90 to-transparent w-full">
-            <h1 class="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Sion Jaison</h1>
-            <p class="text-gray-600 dark:text-gray-300 mt-2 font-mono text-sm">Full Stack Developer & Security Enthusiast</p>
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white">Sion Jaison</h1>
+            <p class="text-gray-600 dark:text-gray-300 mt-2 font-mono text-sm">Full Stack Developer</p>
         </div>
       </div>
-
-      <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] relative overflow-hidden group min-h-[200px] transition-colors duration-300">
+      
+      <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] relative overflow-hidden group min-h-[200px]">
         <div class="absolute inset-0 opacity-50 dark:grayscale dark:invert dark:contrast-125">
-            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=Halifax,+Nova+Scotia&t=&z=13&ie=UTF8&iwloc=&output=embed" class="w-full h-full opacity-60 dark:opacity-100" style="filter: grayscale(1);"></iframe>
+             <iframe width="100%" height="100%" frameborder="0" scrolling="no" src="https://maps.google.com/maps?q=Halifax,+Nova+Scotia&t=&z=13&ie=UTF8&iwloc=&output=embed" class="w-full h-full opacity-60 dark:opacity-100" style="filter: grayscale(1);"></iframe>
         </div>
         <div class="absolute bottom-6 left-6 z-10">
-            <div class="flex items-center gap-2 mb-1">
-                <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span></span>
-                <span class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wider">Halifax, NS</span>
-            </div>
+            <div class="flex items-center gap-2 mb-1"><span class="text-xs font-bold text-green-600 dark:text-green-400 uppercase tracking-wider">Halifax, NS</span></div>
             <h3 class="text-gray-900 dark:text-white font-bold text-2xl font-mono" id="halifax-clock">--:-- AM</h3>
         </div>
       </div>
 
-      <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center gap-4 transition duration-300">
-        <a href="https://github.com/sion-jaison" target="_blank" class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition group/icon">
-            <div class="w-8 h-8 bg-gray-100 dark:bg-[#2a2a2a] rounded-full flex items-center justify-center group-hover/icon:bg-black group-hover/icon:text-white dark:group-hover/icon:bg-white dark:group-hover/icon:text-black transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></div>
-            <span class="font-bold text-sm">GitHub</span>
-        </a>
-        <a href="https://linkedin.com/in/sion-jaison-226a091a2" target="_blank" class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition group/icon">
-            <div class="w-8 h-8 bg-gray-100 dark:bg-[#2a2a2a] rounded-full flex items-center justify-center group-hover/icon:bg-[#0077b5] group-hover/icon:text-white transition"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></div>
-            <span class="font-bold text-sm">LinkedIn</span>
-        </a>
+      <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center gap-4">
+         <a href="https://github.com/sion-jaison" class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition group/icon"><div class="w-8 h-8 bg-gray-100 dark:bg-[#2a2a2a] rounded-full flex items-center justify-center transition">Github</div><span class="font-bold text-sm">GitHub</span></a>
+         <a href="https://linkedin.com/in/sion-jaison-226a091a2" class="flex items-center gap-3 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition group/icon"><div class="w-8 h-8 bg-gray-100 dark:bg-[#2a2a2a] rounded-full flex items-center justify-center transition">In</div><span class="font-bold text-sm">LinkedIn</span></a>
       </div>
 
-      <div class="spotlight-card reveal md:col-span-2 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-center gap-4 hover:border-gray-300 dark:hover:border-slate-600 transition duration-300">
+      <div class="spotlight-card reveal md:col-span-2 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-center gap-4">
         <h3 class="text-gray-500 dark:text-gray-400 font-bold text-xs uppercase tracking-widest mb-2">My Stack</h3>
-        <div class="flex flex-wrap gap-2">
-            {techStack.map((tech) => (
-                <span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-[#2a2a2a] border border-gray-200 dark:border-[#333] text-gray-700 dark:text-gray-300 text-sm font-medium transition cursor-default">{tech}</span>
-            ))}
-        </div>
+        <div class="flex flex-wrap gap-2">{techStack.map((tech) => <span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-[#2a2a2a] border border-gray-200 dark:border-[#333] text-gray-700 dark:text-gray-300 text-sm font-medium">{tech}</span>)}</div>
       </div>
 
-      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 md:p-12 hover:border-gray-300 dark:hover:border-slate-600 transition duration-300">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">
-            <span class="text-indigo-500 dark:text-indigo-400">💼</span> Experience
-        </h2>
-        <div class="space-y-8">
-            {experience.map((job) => (
-                <div class="flex flex-col md:flex-row gap-6 relative group">
-                    <div class="hidden md:block absolute left-[27px] top-16 bottom-[-32px] w-0.5 bg-gray-200 dark:bg-[#2a2a2a] group-last:hidden"></div>
-                    <div class="flex-shrink-0">
-                        <div class="w-14 h-14 bg-gray-50 dark:bg-[#2a2a2a] rounded-xl border border-gray-200 dark:border-[#333] flex items-center justify-center overflow-hidden group-hover:border-indigo-500 transition">
-                            <img src={job.logo} alt={job.company} class="w-full h-full object-cover opacity-80 group-hover:opacity-100" onerror="this.src='https://ui-avatars.com/api/?name=W&background=random'"/>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                            <div><h3 class="text-gray-900 dark:text-white font-bold text-lg">{job.role}</h3><p class="text-indigo-600 dark:text-indigo-400 text-sm font-medium">{job.company}</p></div>
-                            <span class="text-gray-500 text-sm font-mono mt-1 md:mt-0 bg-gray-100 dark:bg-[#2a2a2a] px-3 py-1 rounded-full border border-transparent group-hover:border-indigo-500/30 transition">{job.date}</span>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-2xl">{job.desc}</p>
-                    </div>
-                </div>
-            ))}
-        </div>
-      </div>
-
-      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 hover:border-gray-300 dark:hover:border-slate-600 transition duration-300">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3"><span class="text-yellow-500">📜</span> Certifications</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {certifications.map((cert) => (
-                <div class="bg-gray-50 dark:bg-[#252525] border border-gray-100 dark:border-[#333] p-4 rounded-2xl flex items-center gap-4 hover:scale-[1.02] transition duration-300 shadow-sm cursor-default">
-                    <div class={`w-12 h-12 rounded-full ${cert.color} bg-opacity-10 flex items-center justify-center flex-shrink-0`}>
-                        <img src={cert.logo} class="w-8 h-8 object-contain" onerror="this.style.display='none';"/>
-                    </div>
-                    <div><h4 class="text-gray-900 dark:text-white font-bold text-sm leading-tight">{cert.name}</h4><p class="text-gray-500 text-xs mt-1">{cert.issuer} • {cert.date}</p></div>
-                </div>
-            ))}
-        </div>
-      </div>
-
-      <a href="/blog/hello-world" class="spotlight-card reveal md:col-span-2 bg-gradient-to-br from-indigo-900 to-indigo-950 dark:to-[#1c1c1c] border border-indigo-800 dark:border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center items-center text-center hover:scale-[1.01] transition duration-300 group">
-        <span class="text-indigo-200 dark:text-indigo-300 font-mono text-xs mb-2">Thoughts & Updates</span>
-        <h3 class="text-xl font-bold text-white mb-1 group-hover:underline decoration-indigo-400 underline-offset-4">Read My Blog</h3>
-        <div class="mt-4 w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition">→</div>
+      <a href="/about" class="spotlight-card reveal md:col-span-2 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 flex flex-col justify-between hover:border-gray-300 dark:hover:border-slate-600 transition duration-300 group">
+        <div><h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-indigo-500 transition">About Me</h2><p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">Specialize in automation scripts and security workflows.</p></div>
+        <div class="flex items-center gap-2 text-indigo-500 font-bold">View Portfolio & Hobbies <span>→</span></div>
       </a>
 
-      <a href="/about" class="spotlight-card reveal md:col-span-2 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center items-center text-center hover:scale-[1.01] transition duration-300 group">
-        <span class="text-gray-500 dark:text-gray-400 font-mono text-xs mb-2">Music, Video & Photo</span>
-        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-indigo-500">View Creative Portfolio</h3>
-        <div class="mt-4 w-10 h-10 bg-gray-100 dark:bg-white/10 rounded-full flex items-center justify-center text-black dark:text-white group-hover:bg-indigo-500 group-hover:text-white transition">→</div>
+      <div class="spotlight-card reveal md:col-span-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-[#1e1e24] dark:to-[#252525] border border-indigo-100 dark:border-[#2a2a2a] rounded-[2rem] p-8 md:p-10">
+        <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+            <div class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg">⚡</div>
+            <div>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Professional Summary</h2>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed max-w-4xl">Results-driven <strong>Network Security Analyst</strong> and <strong>Linux Administrator</strong> with experience hardening gateway servers and automating infrastructure.</p>
+            </div>
+        </div>
+      </div>
+
+      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 md:p-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3">💼 Experience</h2>
+        <div class="space-y-8">{experience.map((job) => <div class="flex flex-col md:flex-row gap-6 relative group"><div class="flex-grow"><div><h3 class="text-gray-900 dark:text-white font-bold text-lg">{job.role}</h3><p class="text-indigo-600 dark:text-indigo-400 text-sm font-medium">{job.company}</p></div><p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed max-w-2xl">{job.desc}</p></div></div>)}</div>
+      </div>
+
+      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">📜 Certifications</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">{certifications.map((cert) => <div class="bg-gray-50 dark:bg-[#252525] border border-gray-100 dark:border-[#333] p-4 rounded-2xl flex items-center gap-4"><img src={cert.logo} class="w-8 h-8 object-contain" /><div><h4 class="text-gray-900 dark:text-white font-bold text-sm leading-tight">{cert.name}</h4><p class="text-gray-500 text-xs mt-1">{cert.issuer}</p></div></div>)}</div>
+      </div>
+
+      <a href="/blog" class="spotlight-card reveal md:col-span-4 bg-gradient-to-br from-indigo-900 to-indigo-950 dark:to-[#1c1c1c] border border-indigo-800 dark:border-[#2a2a2a] rounded-[2rem] p-6 flex flex-col justify-center items-center text-center hover:scale-[1.01] transition duration-300 group">
+        <span class="text-indigo-200 dark:text-indigo-300 font-mono text-xs mb-2">Latest from Blog</span>
+        <h3 class="text-xl font-bold text-white mb-1 group-hover:underline decoration-indigo-400 underline-offset-4">
+            {latestPost ? latestPost.data.title : "Read My Thoughts & Updates"}
+        </h3>
+        <p class="text-indigo-200/60 text-sm max-w-md mt-2">
+            {latestPost ? new Date(latestPost.data.pubDate).toLocaleDateString() : "Check back for updates on security and automation."}
+        </p>
       </a>
+
+      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 md:p-12 text-center">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Let's Work Together</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-8">Have a project in mind or want to discuss security?</p>
+        <form name="contact" method="POST" data-netlify="true" class="max-w-md mx-auto space-y-4">
+            <input type="text" name="name" placeholder="Your Name" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-[#252525] border border-gray-200 dark:border-[#333] focus:border-indigo-500 focus:outline-none dark:text-white"/>
+            <input type="email" name="email" placeholder="Your Email" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-[#252525] border border-gray-200 dark:border-[#333] focus:border-indigo-500 focus:outline-none dark:text-white"/>
+            <textarea name="message" placeholder="Message" rows="3" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-[#252525] border border-gray-200 dark:border-[#333] focus:border-indigo-500 focus:outline-none dark:text-white"></textarea>
+            <button type="submit" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-500 transition w-full">Send Message</button>
+        </form>
+      </div>
 
     </div>
   </main>
-
+  
   <script is:inline>
-    // Theme Logic
-    const handleToggleClick = () => {
-      const element = document.documentElement;
-      element.classList.toggle("dark");
-      localStorage.setItem("theme", element.classList.contains("dark") ? "dark" : "light");
-    }
+    // Theme Logic & Spotlight Logic (Same as before)
+    const handleToggleClick = () => { const el = document.documentElement; el.classList.toggle("dark"); localStorage.setItem("theme", el.classList.contains("dark") ? "dark" : "light"); }
     document.getElementById("themeToggle").addEventListener("click", handleToggleClick);
+    
+    // Clock
+    setInterval(() => { const c = document.getElementById('halifax-clock'); if(c) c.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Halifax', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date()); }, 1000);
 
-    // Clock Logic
-    function updateTime() {
-        const clock = document.getElementById('halifax-clock');
-        if(clock) {
-            clock.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Halifax', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date());
-        }
-    }
-    setInterval(updateTime, 1000); updateTime();
-
-    // Spotlight Logic
+    // Spotlight
     const cards = document.querySelectorAll('.spotlight-card');
     document.addEventListener('mousemove', (e) => {
       for (const card of cards) {
@@ -174,15 +136,4 @@ const techStack = ["Python", "Linux", "Docker", "Astro", "Tailwind", "Bash", "Ne
       }
     });
   </script>
-
-  <style>
-    .spotlight-card { position: relative; }
-    :global(.dark) .spotlight-card::before {
-      content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 2rem;
-      background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
-      opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 2;
-    }
-    :global(.dark) .spotlight-card:hover::before { opacity: 1; }
-  </style>
-
 </Layout>
