@@ -25,20 +25,14 @@ const currentYear = new Date().getFullYear();
         <ViewTransitions />
 
         <script is:inline>
-            // CRITICAL FIX: Theme Persistence
-            // 1. Check LocalStorage first
-            // 2. If null, check System Preference
-            // 3. Default to 'dark' if neither exists
+            // FORCE DARK THEME IMMEDIATELY
             const getTheme = () => {
                 if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
                     return localStorage.getItem('theme');
                 }
-                if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-                    return 'light';
-                }
-                return 'dark'; // Default is now DARK
+                return 'dark'; // Default to dark
             };
-
+            
             const theme = getTheme();
             if (theme === 'light') {
                 document.documentElement.classList.remove('dark');
@@ -47,10 +41,10 @@ const currentYear = new Date().getFullYear();
             }
             window.localStorage.setItem('theme', theme);
 
-            // Re-apply on View Transitions navigation
+            // Re-apply theme after navigation
             document.addEventListener('astro:after-swap', () => {
-                const theme = localStorage.getItem('theme') || 'dark';
-                if (theme === 'light') document.documentElement.classList.remove('dark');
+                const storedTheme = localStorage.getItem('theme') || 'dark';
+                if (storedTheme === 'light') document.documentElement.classList.remove('dark');
                 else document.documentElement.classList.add('dark');
             });
         </script>
@@ -60,32 +54,39 @@ const currentYear = new Date().getFullYear();
         
         <div class="fixed inset-0 z-50 pointer-events-none opacity-[0.04] dark:opacity-[0.06] mix-blend-overlay" style="background-image: url('https://grainy-gradients.vercel.app/noise.svg');"></div>
 
-        <div class="flex-grow">
-            <slot />
-        </div>
-
-        <footer class="py-8 text-center text-xs font-mono text-gray-500 dark:text-gray-600 border-t border-gray-200 dark:border-[#1a1a1a] mt-20">
-            <p>&copy; Sion Jaison {currentYear}. Built with Astro & Tailwind.</p>
-        </footer>
+        <slot />
         
+        <footer class="py-8 text-center text-xs font-mono text-gray-500 dark:text-gray-600 border-t border-gray-200 dark:border-[#1a1a1a] mt-auto">
+            <p>&copy; Sion Jaison {currentYear}.</p>
+        </footer>
+
         <CommandPalette />
 
         <script>
-            // Fix animations on page navigation
-            document.addEventListener('astro:page-load', () => {
+            // ANIMATION FIX: Run on every navigation
+            const setupAnimations = () => {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => { 
-                        if (entry.isIntersecting) entry.target.classList.add('active'); 
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active'); 
+                            observer.unobserve(entry.target); // Stop watching once revealed
+                        }
                     });
                 }, { threshold: 0.1 });
 
                 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-            });
+            };
+
+            document.addEventListener('astro:page-load', setupAnimations);
+            // Fallback: run immediately just in case
+            setupAnimations();
         </script>
 	</body>
 </html>
 
 <style is:global>
+    /* Default state is hidden */
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+    /* Active state is visible */
     .reveal.active { opacity: 1; transform: translateY(0); }
 </style>
