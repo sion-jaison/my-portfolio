@@ -1,63 +1,98 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import Layout from '../layouts/Layout.astro';
+
+// DATA: MUSIC (Place .mp3 files in /public/music/)
+const tracks = [
+  { title: "Winterfell Theme Remix", duration: "3:45", file: "/music/track1.mp3" },
+  { title: "Cyberpunk Ambient", duration: "2:20", file: "/music/track2.mp3" },
+  { title: "Late Night Lo-Fi", duration: "4:10", file: "/music/track3.mp3" }
+];
+
+// DATA: VIDEOS
+const videos = [
+  { title: "Cinematic Travel Edit", link: "#" },
+  { title: "Tech Product Review", link: "#" }
+];
+
+// DATA: PHOTOS (Place .jpg files in /public/photos/)
+const photos = [
+  "/photo1.jpg", "/photo2.jpg", "/photo3.jpg", "/photo4.jpg", "/photo5.jpg", "/photo6.jpg"
+];
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<Layout title="About Sion | Creative Works">
+  
+  <nav class="fixed top-0 left-0 right-0 z-40 flex justify-center pt-6 reveal">
+    <div class="bg-white/80 dark:bg-[#1c1c1c]/80 backdrop-blur-md border border-gray-200 dark:border-[#2a2a2a] px-6 py-3 rounded-full flex gap-6 items-center shadow-lg transition-colors duration-300">
+      <a href="/" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">HOME</a>
+      <a href="/blog/hello-world" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">BLOG</a>
+      <a href="/about" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">ABOUT</a>
+    </div>
+  </nav>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+  <main class="max-w-[1100px] mx-auto px-6 py-32">
+    
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-24 reveal">
+        <div>
+            <span class="text-indigo-500 font-mono text-sm tracking-wider uppercase mb-2 block">The Person Behind the Code</span>
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Creativity meets <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Logic.</span></h1>
+            <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">Beyond server administration, I am a creator. Whether it's composing scores, grading footage, or street photography, I believe technical precision and artistic expression go hand in hand.</p>
+            <div class="flex gap-4">
+                <a href="https://instagram.com/your_music_page" target="_blank" class="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition shadow-lg shadow-purple-500/20">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    IG: @sion.beats
+                </a>
+                <a href="/resume.pdf" download class="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition">
+                    📄 Resume
+                </a>
+            </div>
+        </div>
+        <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <img src="/me.jpg" class="relative rounded-[2rem] w-full shadow-2xl rotate-2 hover:rotate-0 transition duration-500" alt="Sion Jaison"/>
+        </div>
+    </div>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+    <div class="mb-24 reveal">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3"><span class="text-purple-500">🎧</span> Music Production</h2>
+            <span class="text-xs font-mono text-gray-500 border border-gray-700 rounded px-2 py-1">FL Studio</span>
+        </div>
+        <div class="bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 space-y-4">
+            {tracks.map((track) => (
+                <div class="group flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-[#252525] transition cursor-pointer border border-transparent hover:border-purple-500/30">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition">▶</div>
+                        <div><h3 class="font-bold text-gray-900 dark:text-white">{track.title}</h3><p class="text-xs text-gray-500">Original Mix</p></div>
+                    </div>
+                    <span class="text-sm font-mono text-gray-500">{track.duration}</span>
+                </div>
+            ))}
+        </div>
+    </div>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+    <div class="mb-24 reveal">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3"><span class="text-red-500">🎬</span> Video Edits</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            {videos.map((video) => (
+                <div class="group relative aspect-video bg-black rounded-2xl overflow-hidden border border-gray-800 cursor-pointer">
+                    <div class="absolute inset-0 bg-gray-800 flex items-center justify-center"><span class="text-gray-600">Video Thumbnail</span></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent"><h3 class="text-white font-bold">{video.title}</h3></div>
+                </div>
+            ))}
+        </div>
+    </div>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
+    <div class="reveal">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-8"><span class="text-yellow-500">📸</span> Photography</h2>
+        <div class="columns-1 md:columns-3 gap-4 space-y-4">
+            {photos.map((photo) => (
+                <div class="break-inside-avoid relative group rounded-2xl overflow-hidden">
+                    <img src={photo} class="w-full bg-gray-800 hover:scale-105 transition duration-700" alt="Photography" onerror="this.src='https://source.unsplash.com/random/800x600?camera'"/>
+                </div>
+            ))}
+        </div>
+    </div>
+
+  </main>
 </Layout>
