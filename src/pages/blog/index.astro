@@ -3,18 +3,17 @@ import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
 <Layout title="Blog | Sion Jaison">
-  
-  <nav class="fixed top-0 left-0 right-0 z-40 flex justify-center pt-6 reveal">
+  <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 reveal">
     <div class="bg-white/80 dark:bg-[#1c1c1c]/80 backdrop-blur-md border border-gray-200 dark:border-[#2a2a2a] px-6 py-3 rounded-full flex gap-6 items-center shadow-lg transition-colors duration-300">
       <a href="/" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">HOME</a>
-      <a href="/blog" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">BLOG</a>
       <a href="/about" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">ALL</a>
-      
+      <a href="/blog" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">BLOG</a>
+
       <button id="themeToggle" class="ml-2 w-8 h-8 rounded-full bg-gray-100 dark:bg-[#333] flex items-center justify-center text-gray-600 dark:text-yellow-400 hover:scale-110 transition">
         <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -23,18 +22,17 @@ const posts = (await getCollection('blog')).sort(
   </nav>
 
   <main class="max-w-[1000px] mx-auto px-6 py-32">
-    
     <div class="text-center mb-20 reveal">
         <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-6">Thoughts & <span class="text-indigo-500">Updates</span></h1>
         <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-            Deep dives into network security, automation workflows with n8n, and Linux server troubleshooting.
+            Deep dives into security, automation and new tech.
         </p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8">
         {posts.map((post) => (
-            <a href={`/blog/${post.slug}/`} class="spotlight-card reveal group relative bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] overflow-hidden hover:border-indigo-500 dark:hover:border-indigo-500 transition duration-300">
-                
+            /* FIX IS HERE: Changed post.slug to post.id */
+            <a href={`/blog/${post.id}/`} class="spotlight-card reveal group relative bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] overflow-hidden hover:border-indigo-500 dark:hover:border-indigo-500 transition duration-300">
                 <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-[#252525]">
                     {post.data.heroImage ? (
                         <img src={post.data.heroImage} alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" />
@@ -59,11 +57,9 @@ const posts = (await getCollection('blog')).sort(
             </a>
         ))}
     </div>
-
   </main>
 
   <script is:inline>
-    // Theme Logic
     const handleToggleClick = () => {
       const element = document.documentElement;
       element.classList.toggle("dark");
@@ -71,7 +67,6 @@ const posts = (await getCollection('blog')).sort(
     }
     document.getElementById("themeToggle").addEventListener("click", handleToggleClick);
 
-    // Spotlight Logic
     const cards = document.querySelectorAll('.spotlight-card');
     document.addEventListener('mousemove', (e) => {
       for (const card of cards) {

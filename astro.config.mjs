@@ -1,14 +1,19 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
+import keystatic from '@keystatic/astro';
+import vercel from '@astrojs/vercel'; // FIXED: Removed '/serverless'
+import markdoc from '@astrojs/markdoc';
 
 export default defineConfig({
-  site: 'https://example.com',
+  output: 'static', // FIXED: Changed 'hybrid' to 'static' (Astro 5 default)
+  adapter: vercel({
+    webAnalytics: { enabled: true } // Bonus: Adds free analytics
+  }),
   integrations: [
-    mdx(), 
-    sitemap(),
-    tailwind()
+    tailwind(),
+    react(),
+    keystatic(),
+    markdoc()
   ],
 });

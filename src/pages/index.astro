@@ -5,22 +5,66 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const latestPost = posts[0];
 
+// Updated Experience with deeper details from your resume & current work
 const experience = [
-  { role: "Network Security Analyst", company: "Tech Solutions Inc.", date: "2024 - Present", logo: "/company1.png", desc: "Orchestrating gateway security policies, automating threat detection with Python, and reducing incident response time by 40%." },
-  { role: "Linux System Administrator", company: "DataCorp Halifax", date: "2022 - 2024", logo: "/company2.png", desc: "Managed 50+ RHEL servers, optimized Apache/Nginx configurations, and deployed automated backup solutions using Bash." },
+  { 
+    role: "Technical Support Engineer", 
+    company: "SolutionInc Ltd.", 
+    date: "Mar 2025 - Present", 
+    logo: "/company1.png", // Update with SolutionInc logo path
+    desc: "Spearheading gateway server security and high availability for enterprise clients. Automating legacy maintenance tasks using Perl, CGI, and Bash to streamline system operations. Conducting continuous internal penetration testing and vulnerability assessments to identify exploits before they impact live operations." 
+  },
+  { 
+    role: "Technical Analyst (Cyber Security)", 
+    company: "Government of Nova Scotia", 
+    date: "Jan 2024 - Feb 2025", 
+    logo: "/company2.png", // Update with Gov NS logo path
+    desc: "Managed Identity and Access Management (IAM) for critical provincial healthcare systems (Meditech, SHARE DIS). Enforced least-privilege principles through rigorous Active Directory auditing and access reviews, ensuring compliance with privacy regulations while training new staff on security protocols." 
+  },
+  { 
+    role: "Penetration Tester", 
+    company: "HackerOne", 
+    date: "Nov 2022 - Present", 
+    logo: "/hackerone.png", // You might want to add a logo for this
+    desc: "Independent security researcher identifying high severity vulnerabilities (SQLi, XSS, Insecure Configs) across diverse global targets. Authored comprehensive remediation reports for stakeholders, directly contributing in reduction of exploit risks for partnered organizations." 
+  }
 ];
 
+// Certifications matching your resume
 const certifications = [
-  { name: "CompTIA Security+", issuer: "CompTIA", date: "2024", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/CompTIA_Security%2B.svg/1200px-CompTIA_Security%2B.svg.png", color: "bg-red-500" },
-  { name: "AWS Solutions Architect", issuer: "AWS", date: "2023", logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg", color: "bg-orange-500" },
-  { name: "Cisco CCNA", issuer: "Cisco", date: "2022", logo: "https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg", color: "bg-blue-500" },
-  { name: "Red Hat Admin", issuer: "Red Hat", date: "2021", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Red_Hat_logo.svg/1200px-Red_Hat_logo.svg.png", color: "bg-red-700" }
+  { name: "Burp Suite Certified Practitioner", issuer: "PortSwigger", date: "2024", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_MRvtmJH273KKz6eqqGTZHtTIF8SDigD6sA&s", color: "bg-orange-500" },
+  { name: "Certified Red Team Professional", issuer: "Altered Security", date: "2023", logo: "https://static.wixstatic.com/media/628794_48b154d7598e4ce8b12b4a9bda6979df~mv2.png", color: "bg-red-600" },
+  { name: "AWS Certified Cloud Practitioner", issuer: "AWS", date: "2022", logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg", color: "bg-gray-800" },
+  { name: "AZ-900: Azure Fundamentals", issuer: "Microsoft", date: "2022", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg", color: "bg-blue-500" }
 ];
 
-const techStack = ["Python", "Linux", "Docker", "Kubernetes", "Ansible", "Bash", "Network Security", "Wireshark", "n8n", "Git", "AWS", "Terraform"];
+// Your hybrid stack (Security + Dev/Automation)
+const techStack = [
+  // Core Infrastructure & OS
+  "Linux",
+  "Windows Server", 
+  "Docker",
+  "AWS",
+  "Azure AD",       
+
+  // Scripting & Automation
+  "Bash",
+  "Python",         
+  "Perl",           
+  "PowerShell",     
+  "n8n",            
+
+  // Network Security & Pentesting
+  "Network Security",
+  "Wireshark",
+  "Nmap",           
+  "Burp Suite",     
+  "Metasploit",     
+  "Splunk"          
+];
 ---
 
-<Layout title="Sion Jaison | Developer">
+<Layout title="Sion Jaison | Security Engineer & Network Specialist">
   <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 reveal">
     <div class="bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl border border-gray-200 dark:border-[#2a2a2a] px-8 py-3 rounded-full flex gap-8 items-center shadow-2xl transition-all duration-300">
       <a href="/" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">HOME</a>
@@ -46,7 +90,7 @@ const techStack = ["Python", "Linux", "Docker", "Kubernetes", "Ansible", "Bash",
       <div class="spotlight-card reveal md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-[2.5rem] border border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#0a0a0a]">
         <img src="/me.jpg" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-105 opacity-100" onerror="this.src='https://ui-avatars.com/api/?name=Sion+Jaison&background=0a0a0a&color=fff&size=512'"/>
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 p-8"><h2 class="text-3xl font-bold text-white tracking-tight">Sion Jaison</h2><p class="text-gray-300 mt-1 font-mono text-sm">Full Stack Developer</p></div>
+        <div class="absolute bottom-0 left-0 p-8"><h2 class="text-3xl font-bold text-white tracking-tight">Sion Jaison</h2><p class="text-gray-300 mt-1 font-mono text-sm">Security Engineer & Automation Specialist</p></div>
       </div>
 
       <div class="spotlight-card reveal md:col-span-1 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] relative overflow-hidden group min-h-[220px]">
@@ -74,6 +118,16 @@ const techStack = ["Python", "Linux", "Docker", "Kubernetes", "Ansible", "Bash",
         <div class="relative flex overflow-x-hidden"><div class="animate-marquee whitespace-nowrap flex gap-8">{[...techStack, ...techStack].map((tech) => <span class="text-xl font-bold text-gray-300 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-white transition cursor-default">{tech}</span>)}</div><div class="absolute top-0 animate-marquee2 whitespace-nowrap flex gap-8">{[...techStack, ...techStack].map((tech) => <span class="text-xl font-bold text-gray-300 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-white transition cursor-default">{tech}</span>)}</div></div>
       </div>
 
+      <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-8 md:p-10">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-4">
+            <span class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 text-lg">🚀</span>
+            Professional Summary
+        </h2>
+        <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
+           I am a <strong>Security Engineer</strong> who builds tools to protect critical systems. With a background in both Linux administration and offensive security, I bridge the gap between maintaining legacy enterprise stacks and deploying modern automation. From securing gateway servers at SolutionInc to managing healthcare access for the Government of Nova Scotia, I focus on tangible risk reduction.
+		</p>
+      </div>
+
       <div class="spotlight-card reveal md:col-span-4 bg-white dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#2a2a2a] rounded-[2.5rem] p-8 md:p-12">
         <div class="flex items-center justify-between mb-10"><h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-4"><span class="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-500 text-lg">💼</span> Experience</h2><a href="/resume.pdf" class="text-sm font-bold text-indigo-500 hover:underline">View Full Resume</a></div>
         <div class="space-y-12">{experience.map((job) => <div class="flex flex-col md:flex-row gap-6 relative group"><div class="hidden md:block absolute left-[31px] top-20 bottom-[-48px] w-px bg-gray-200 dark:bg-[#1f1f1f] group-last:hidden"></div><div class="flex-shrink-0 z-10"><div class="w-16 h-16 bg-white dark:bg-[#1f1f1f] rounded-2xl border border-gray-200 dark:border-[#333] p-3 shadow-lg flex items-center justify-center"><img src={job.logo} alt={job.company} class="w-full h-full object-contain opacity-90 group-hover:opacity-100 transition" onerror="this.src='https://ui-avatars.com/api/?name=C&background=random'"/></div></div><div class="flex-grow pt-1"><div class="flex flex-col md:flex-row md:items-center justify-between mb-2"><div><h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-500 transition">{job.role}</h3><p class="text-indigo-500 font-medium">{job.company}</p></div><span class="text-gray-500 text-xs font-mono font-bold bg-gray-100 dark:bg-[#1f1f1f] px-3 py-1 rounded-full">{job.date}</span></div><p class="text-gray-600 dark:text-gray-400 leading-relaxed text-base mt-3">{job.desc}</p></div></div>)}</div>
@@ -96,21 +150,21 @@ const techStack = ["Python", "Linux", "Docker", "Kubernetes", "Ansible", "Bash",
       </div>
     </div>
   </main>
-  
+
   <script is:inline>
     // PAGE LOAD EVENT LISTENER TO FIX NAVIGATION BUGS
     document.addEventListener('astro:page-load', () => {
         const toggleBtn = document.getElementById("themeToggle");
         if(toggleBtn) {
-            toggleBtn.addEventListener("click", () => { 
+            toggleBtn.addEventListener("click", () => {
                 const el = document.documentElement;
                 el.classList.toggle("dark");
                 localStorage.setItem("theme", el.classList.contains("dark") ? "dark" : "light");
             });
         }
-        
+
         setInterval(() => { const c = document.getElementById('halifax-clock'); if(c) c.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Halifax', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date()); }, 1000);
-        
+
         const cards = document.querySelectorAll('.spotlight-card');
         document.addEventListener('mousemove', (e) => {
           for (const card of cards) {

@@ -2,43 +2,276 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-const tracks = (await getCollection('music')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const photos = (await getCollection('photos')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const videos = (await getCollection('videos')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+// Sort functions
+const tracks = (await getCollection('music')).sort((a, b) => {
+    return (b.data.date ? b.data.date.valueOf() : 0) - (a.data.date ? a.data.date.valueOf() : 0);
+});
+const photos = (await getCollection('photos')).sort((a, b) => {
+    return (b.data.date ? b.data.date.valueOf() : 0) - (a.data.date ? a.data.date.valueOf() : 0);
+});
+const videos = (await getCollection('videos')).sort((a, b) => {
+    return (b.data.date ? b.data.date.valueOf() : 0) - (a.data.date ? a.data.date.valueOf() : 0);
+});
 ---
 
 <Layout title="About Sion | Creative Portfolio">
+
+  <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 cursor-zoom-out overflow-hidden">
+    <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
+        <img id="lightbox-img" class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl transition-transform duration-200 ease-out cursor-zoom-in" src="" alt="Full screen view" />
+    </div>
+    <div class="absolute bottom-10 left-0 right-0 text-center text-white/50 text-xs font-mono pointer-events-none">
+        Click image to Zoom • Click outside to Close
+    </div>
+  </div>
+
   <nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 reveal">
     <div class="bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl border border-gray-200 dark:border-[#2a2a2a] px-8 py-3 rounded-full flex gap-8 items-center shadow-2xl transition-all duration-300">
       <a href="/" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">HOME</a>
       <a href="/about" class="text-gray-900 dark:text-white font-bold hover:text-indigo-500 transition text-sm tracking-wide">ALL</a>
       <a href="/blog" class="text-gray-500 dark:text-gray-400 font-medium hover:text-black dark:hover:text-white transition text-sm tracking-wide">BLOG</a>
       <div class="w-px h-4 bg-gray-300 dark:bg-gray-700"></div>
-      <button id="themeToggle" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#1f1f1f] flex items-center justify-center text-gray-600 dark:text-yellow-400 hover:scale-110 transition border border-gray-200 dark:border-[#333]"><svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg><svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg></button>
+      <button id="themeToggle" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-[#1f1f1f] flex items-center justify-center text-gray-600 dark:text-yellow-400 hover:scale-110 transition border border-gray-200 dark:border-[#333]">
+        <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </button>
     </div>
   </nav>
 
   <main class="max-w-[1100px] mx-auto px-6 py-40">
     <div class="grid md:grid-cols-2 gap-12 items-center mb-24 reveal">
-        <div><span class="text-indigo-500 font-mono text-sm tracking-wider uppercase mb-2 block">The Person Behind the Code</span><h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Creativity meets <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Logic.</span></h1><p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">Beyond server administration, I am a creator. This is where I showcase my music, edits, and photography.</p><div class="flex gap-4"><a href="https://instagram.com/sion.beats" target="_blank" class="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition shadow-lg shadow-purple-500/20">IG: @sion.beats</a></div></div>
-        <div class="relative group"><div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div><img src="/me.jpg" class="relative rounded-[2rem] w-full shadow-2xl rotate-2 hover:rotate-0 transition duration-500" alt="Sion Jaison"/></div>
+        <div>
+            <span class="text-indigo-500 font-mono text-sm tracking-wider uppercase mb-2 block">The Person Behind the Code</span>
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">Creativity meets <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Logic.</span></h1>
+            <p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-8">Beyond technical, I love to be a creator. This is where I showcase my music, edits, and photography.</p>
+            <div class="flex gap-4"><a href="https://www.instagram.com/winterfellaudio?igsh=MXFocHdoM3BwYWtiZw==" target="_blank" class="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full font-bold hover:scale-105 transition shadow-lg shadow-purple-500/20">Instagram: @winterfellaudio</a></div>
+        </div>
+        <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-[2rem] blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+            <img src="/me.jpg" class="relative rounded-[2rem] w-full shadow-2xl rotate-2 hover:rotate-0 transition duration-500" alt="Sion Jaison"/>
+        </div>
     </div>
     <hr class="border-gray-200 dark:border-[#2a2a2a] mb-24" />
-    
+
     <div class="mb-24 reveal">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3"><span class="text-purple-500">🎧</span> Music Production</h2>
-        {tracks.length === 0 ? <p class="text-gray-500 italic">No tracks uploaded yet.</p> : <div class="bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 space-y-4">{tracks.map((track) => <div class="group flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-[#252525] transition cursor-pointer border border-transparent hover:border-purple-500/30"><div class="flex items-center gap-4"><a href={track.data.audio} target="_blank" class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition">▶</a><div><h3 class="font-bold text-gray-900 dark:text-white">{track.data.title}</h3></div></div><span class="text-sm font-mono text-gray-500">{track.data.duration}</span></div>)}</div>}
+        {tracks.length === 0 ? <p class="text-gray-500 italic">No tracks uploaded yet.</p> : (
+            <div class="bg-white dark:bg-[#1c1c1c] border border-gray-200 dark:border-[#2a2a2a] rounded-[2rem] p-8 space-y-4">
+                {tracks.map((track, index) => (
+                    <div class="group flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-[#252525] transition border border-transparent hover:border-purple-500/30">
+                        <div class="flex items-center gap-4 w-full">
+                            <button
+                                id={`play-btn-${index}`}
+                                data-audio={track.data.audio}
+                                class="play-btn shrink-0 w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition hover:scale-110"
+                            >
+                                <span class="icon font-bold">▶</span>
+                            </button>
+
+                            <div class="flex flex-col w-full">
+                                <div class="flex items-center gap-3">
+                                    <h3 class="font-bold text-gray-900 dark:text-white">{track.data.title}</h3>
+                                    <div id={`waveform-${index}`} class="waveform flex items-end gap-[2px] h-4 opacity-50 transition-opacity">
+                                        <span class="bar w-[3px] bg-purple-500 rounded-full h-[3px]"></span>
+                                        <span class="bar w-[3px] bg-purple-500 rounded-full h-[3px]"></span>
+                                        <span class="bar w-[3px] bg-purple-500 rounded-full h-[3px]"></span>
+                                        <span class="bar w-[3px] bg-purple-500 rounded-full h-[3px]"></span>
+                                        <span class="bar w-[3px] bg-purple-500 rounded-full h-[3px]"></span>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-mono text-gray-500 mt-1">{track.data.duration}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )}
     </div>
 
     <div class="mb-24 reveal">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-3"><span class="text-red-500">🎬</span> Video Edits</h2>
-        {videos.length === 0 ? <p class="text-gray-500 italic">No videos uploaded yet.</p> : <div class="grid md:grid-cols-2 gap-6">{videos.map((video) => <a href={video.data.link} target="_blank" class="group relative aspect-video bg-black rounded-2xl overflow-hidden border border-gray-800 cursor-pointer block"><img src={video.data.thumbnail} class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition" /><div class="absolute inset-0 flex items-center justify-center"><div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white">▶</div></div><div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent"><h3 class="text-white font-bold">{video.data.title}</h3></div></a>)}</div>}
+        {videos.length === 0 ? <p class="text-gray-500 italic">No videos uploaded yet.</p> : (
+            <div class="grid md:grid-cols-2 gap-6">
+                {videos.map((video) => (
+                    <a href={video.data.link} target="_blank" class="group relative aspect-video bg-black rounded-2xl overflow-hidden border border-gray-800 cursor-pointer block">
+                        <img src={video.data.thumbnail} class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition" />
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white">▶</div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
+                            <h3 class="text-white font-bold">{video.data.title}</h3>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        )}
     </div>
 
     <div class="reveal">
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3 mb-8"><span class="text-yellow-500">📸</span> Photography</h2>
-        {photos.length === 0 ? <p class="text-gray-500 italic">No photos uploaded yet.</p> : <div class="columns-1 md:columns-3 gap-4 space-y-4">{photos.map((photo) => <div class="break-inside-avoid relative group rounded-2xl overflow-hidden"><img src={photo.data.image} class="w-full bg-gray-800 hover:scale-105 transition duration-700" /><div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center"><span class="text-white font-mono text-sm">{photo.data.camera || "Photography"}</span></div></div>)}</div>}
+        {photos.length === 0 ? <p class="text-gray-500 italic">No photos uploaded yet.</p> : (
+            <div class="columns-1 md:columns-3 gap-4 space-y-4">
+                {photos.map((photo) => (
+                    <div class="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-zoom-in">
+                        <img
+                            src={photo.data.image}
+                            class="lightbox-trigger w-full bg-gray-800 hover:scale-105 transition duration-700"
+                            alt={photo.data.title}
+                        />
+                        <div class="pointer-events-none absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                            <span class="text-white font-mono text-sm">{photo.data.camera || "Photography"}</span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )}
     </div>
   </main>
-  <script is:inline> const handleToggleClick = () => { const el = document.documentElement; el.classList.toggle("dark"); localStorage.setItem("theme", el.classList.contains("dark") ? "dark" : "light"); }; document.getElementById("themeToggle").addEventListener("click", handleToggleClick); </script>
+
+  <style>
+    /* AUDIO WAVEFORM ANIMATION */
+    .waveform.playing .bar {
+        animation: wave 1s infinite ease-in-out;
+    }
+    .waveform.playing .bar:nth-child(1) { animation-delay: 0.0s; }
+    .waveform.playing .bar:nth-child(2) { animation-delay: 0.1s; }
+    .waveform.playing .bar:nth-child(3) { animation-delay: 0.2s; }
+    .waveform.playing .bar:nth-child(4) { animation-delay: 0.3s; }
+    .waveform.playing .bar:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes wave {
+        0%, 100% { height: 3px; }
+        50% { height: 16px; }
+    }
+  </style>
+
+  <script is:inline>
+    // --- 1. THEME TOGGLE ---
+    const handleToggleClick = () => {
+        const el = document.documentElement;
+        el.classList.toggle("dark");
+        localStorage.setItem("theme", el.classList.contains("dark") ? "dark" : "light");
+    };
+    document.getElementById("themeToggle").addEventListener("click", handleToggleClick);
+
+    // --- 2. AUDIO PLAYER WITH WAVEFORM ---
+    let currentAudio = null;
+    let currentBtn = null;
+    let currentWaveform = null;
+
+    const playButtons = document.querySelectorAll('.play-btn');
+
+    playButtons.forEach((btn, index) => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent bubbling
+            const src = btn.getAttribute('data-audio');
+            const icon = btn.querySelector('.icon');
+            const waveform = document.getElementById(`waveform-${index}`);
+
+            // A. Clicked the active track
+            if (currentBtn === btn && currentAudio) {
+                if (currentAudio.paused) {
+                    currentAudio.play();
+                    icon.textContent = "⏸";
+                    waveform.classList.add('playing');
+                    waveform.style.opacity = '1';
+                } else {
+                    currentAudio.pause();
+                    icon.textContent = "▶";
+                    waveform.classList.remove('playing');
+                    waveform.style.opacity = '0.5';
+                }
+            }
+            // B. Clicked a new track
+            else {
+                // Stop previous
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentBtn.querySelector('.icon').textContent = "▶";
+                    if(currentWaveform) {
+                        currentWaveform.classList.remove('playing');
+                        currentWaveform.style.opacity = '0.5';
+                    }
+                }
+
+                // Play new
+                currentAudio = new Audio(src);
+                currentAudio.play();
+                currentBtn = btn;
+                currentWaveform = waveform;
+
+                icon.textContent = "⏸";
+                waveform.classList.add('playing');
+                waveform.style.opacity = '1';
+
+                // On Finish
+                currentAudio.onended = () => {
+                    icon.textContent = "▶";
+                    waveform.classList.remove('playing');
+                    waveform.style.opacity = '0.5';
+                    currentAudio = null;
+                    currentBtn = null;
+                    currentWaveform = null;
+                };
+            }
+        });
+    });
+
+    // --- 3. LIGHTBOX ZOOM LOGIC ---
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const triggers = document.querySelectorAll('.lightbox-trigger');
+    let isZoomed = false;
+
+    // Open
+    triggers.forEach(img => {
+        img.addEventListener('click', (e) => {
+            lightboxImg.src = e.target.src;
+            lightbox.classList.remove('hidden');
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+            }, 10);
+            isZoomed = false;
+            lightboxImg.style.transform = "scale(1)";
+            lightboxImg.style.cursor = "zoom-in";
+        });
+    });
+
+    // Toggle Zoom (Click on Image)
+    lightboxImg.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent closing lightbox
+        isZoomed = !isZoomed;
+
+        if (isZoomed) {
+            lightboxImg.style.transform = "scale(2.5)";
+            lightboxImg.style.cursor = "zoom-out";
+        } else {
+            lightboxImg.style.transform = "scale(1)";
+            lightboxImg.style.cursor = "zoom-in";
+            // Reset position
+            lightboxImg.style.transformOrigin = "center center";
+        }
+    });
+
+    // Pan Image (Move Mouse when Zoomed)
+    lightboxImg.addEventListener('mousemove', (e) => {
+        if (!isZoomed) return;
+
+        const { left, top, width, height } = lightboxImg.getBoundingClientRect();
+        const x = (e.clientX - left) / width * 100;
+        const y = (e.clientY - top) / height * 100;
+
+        lightboxImg.style.transformOrigin = `${x}% ${y}%`;
+    });
+
+    // Close Lightbox (Click Outside)
+    lightbox.addEventListener('click', () => {
+        lightbox.classList.add('opacity-0');
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            lightboxImg.src = "";
+            isZoomed = false;
+        }, 300);
+    });
+  </script>
 </Layout>
