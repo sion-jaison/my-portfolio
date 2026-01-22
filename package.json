@@ -5,10 +5,10 @@
   "scripts": {
   "dev": "astro dev",
   "start": "astro dev",
-  "build": "node scripts/patch-keystatic.cjs && astro build",  <-- UPDATE THIS LINE
+  "build": "node scripts/patch-keystatic.cjs && astro build", 
   "preview": "astro preview",
   "astro": "astro",
-  "postinstall": "node scripts/patch-keystatic.cjs"           <-- ADD THIS LINE
+  "postinstall": "node scripts/patch-keystatic.cjs"          
   },
   "dependencies": {
     "@astrojs/markdoc": "^0.15.10",
