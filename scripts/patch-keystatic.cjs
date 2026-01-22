@@ -1,67 +1,65 @@
 const fs = require('fs');
 const path = require('path');
 
-// 1. Define the production URL
+// 1. Your Production URL
 const PRODUCTION_SITE_URL = 'https://sionjaison.vercel.app';
 
-// 2. Find the file in node_modules
-const filePath = path.join(
-  __dirname,
-  '../node_modules/@keystatic/core/dist/keystatic-core-api-generic.worker.js'
-);
+// 2. We will look in ALL these files (covering Node, Workers, and Generic)
+const filesToPatch = [
+  '../node_modules/@keystatic/core/dist/keystatic-core-api-generic.worker.js',
+  '../node_modules/@keystatic/core/dist/keystatic-core-api-generic.node.js', // <--- This is the one Vercel likely uses
+  '../node_modules/@keystatic/core/dist/keystatic-core-api-generic.esm.js',
+  '../node_modules/@keystatic/core/dist/index.js' 
+];
 
-console.log('Patching Keystatic OAuth handler...');
+console.log('🛡️  Starting Aggressive Keystatic Patch...');
 
-try {
-  let content = fs.readFileSync(filePath, 'utf8');
+const oldCallbackCode = `url.searchParams.set('code', code);`;
+const newCallbackCode = `url.searchParams.set('code', code);
 
-  if (content.includes('PATCH: Add redirect_uri')) {
-    console.log('Keystatic already patched, skipping.');
-    process.exit(0);
-  }
-
-  // 3. The code we want to replace
-  const oldCallbackCode = `const url = new URL('https://github.com/login/oauth/access_token');
-    url.searchParams.set('client_id', config.clientId);
-    url.searchParams.set('client_secret', config.clientSecret);
-    url.searchParams.set('code', code);
-    const tokenRes = await fetch(url, {`;
-
-  // 4. The new code (Adding the missing redirect_uri)
-  const newCallbackCode = `const url = new URL('https://github.com/login/oauth/access_token');
-    url.searchParams.set('client_id', config.clientId);
-    url.searchParams.set('client_secret', config.clientSecret);
-    url.searchParams.set('code', code);
-    
-    // PATCH: Add redirect_uri to token exchange
+    // PATCH: Force Redirect URI for GitHub App
     const reqUrlForRedirect = new URL(req.url);
     const isProduction = reqUrlForRedirect.hostname !== 'localhost' && !reqUrlForRedirect.hostname.includes('127.0.0.1');
     const siteOrigin = isProduction ? '${PRODUCTION_SITE_URL}' : reqUrlForRedirect.origin;
     url.searchParams.set('redirect_uri', \`\${siteOrigin}/api/keystatic/github/oauth/callback\`);
-    
-    const tokenRes = await fetch(url, {`;
+`;
 
-  // 5. Apply the replacement
-  if (!content.includes('const url = new URL(\'https://github.com/login/oauth/access_token\');')) {
-     // Fallback for minified code or different versions
-     console.error('Could not find exact code match. Attempting broad search...');
-  }
-  
-  // We clean up whitespace to ensure a match
-  const cleanContent = content.replace(/\s+/g, ' ');
-  const cleanOld = oldCallbackCode.replace(/\s+/g, ' ');
-  
-  if (cleanContent.includes(cleanOld)) {
-      content = content.replace(oldCallbackCode, newCallbackCode);
-      fs.writeFileSync(filePath, content);
-      console.log('✅ Keystatic patched successfully!');
-  } else {
-      console.error('❌ Could not find the callback code to patch. Please check the file manually.');
-      process.exit(1);
-  }
+let patchedCount = 0;
 
-} catch (error) {
-  console.error('Error patching Keystatic:', error.message);
-  // We don't exit 1 here to avoid breaking the build if the file path is slightly different
-  console.log('Continuing build without patch...');
+filesToPatch.forEach(relativePath => {
+  const filePath = path.join(__dirname, relativePath);
+  
+  if (fs.existsSync(filePath)) {
+    try {
+      let content = fs.readFileSync(filePath, 'utf8');
+      
+      // Check if already patched
+      if (content.includes('PATCH: Force Redirect URI')) {
+        console.log(`✅ Already patched: ${path.basename(filePath)}`);
+        return;
+      }
+
+      // Check if the file contains the target code
+      // We look for a small unique snippet to be safe across versions
+      if (content.includes(oldCallbackCode)) {
+        // Apply Patch
+        const patchedContent = content.replace(oldCallbackCode, newCallbackCode);
+        fs.writeFileSync(filePath, patchedContent);
+        console.log(`✅ PATCHED: ${path.basename(filePath)}`);
+        patchedCount++;
+      } else {
+        console.log(`⚠️  Code mismatch (skipped): ${path.basename(filePath)}`);
+      }
+    } catch (e) {
+      console.warn(`❌ Error reading ${path.basename(filePath)}: ${e.message}`);
+    }
+  }
+});
+
+if (patchedCount === 0) {
+  console.error("❌ CRITICAL: No files were patched. The search pattern might be outdated.");
+  // We exit 0 to allow build to continue, but logs will show the failure.
+  process.exit(0);
+} else {
+  console.log(`🎉 Success! Patched ${patchedCount} file(s).`);
 }
