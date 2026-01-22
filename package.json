@@ -3,12 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-  "dev": "astro dev",
-  "start": "astro dev",
-  "build": "node scripts/patch-keystatic.cjs && astro build", 
-  "preview": "astro preview",
-  "astro": "astro",
-  "postinstall": "node scripts/patch-keystatic.cjs"          
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "find node_modules/@keystatic/core/dist -name '*.js' -exec sed -i 's|https://github.com/login/oauth/access_token|https://github.com/login/oauth/access_token?redirect_uri=https://sionjaison.vercel.app/api/keystatic/github/oauth/callback|g' {} + && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "postinstall": "echo 'Skipping postinstall patch'"
   },
   "dependencies": {
     "@astrojs/markdoc": "^0.15.10",
