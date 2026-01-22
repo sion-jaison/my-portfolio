@@ -6,7 +6,7 @@ import vercel from '@astrojs/vercel';
 import markdoc from '@astrojs/markdoc';
 
 export default defineConfig({
-  site: 'https://sion-portfolio.vercel.app', // <--- ADD THIS LINE (Use your Vercel project name)
+  site: 'https://sionjaison.vercel.app', // <--- ADD THIS LINE (Use your Vercel project name)
   output: 'static',
   adapter: vercel({
     webAnalytics: { enabled: true }
