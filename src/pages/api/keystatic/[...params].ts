@@ -1,3 +1,4 @@
+// src/pages/api/keystatic/[...params].ts
 export const prerender = false;
 
 import { makeHandler } from '@keystatic/astro/api';
@@ -5,8 +6,8 @@ import config from '../../../../keystatic.config';
 
 export const ALL = makeHandler({
   config,
-  // Force-feed the credentials from the environment
-  clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID,
-  clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-  secret: import.meta.env.KEYSTATIC_SECRET,
+  // This is the FIX: We force the server to read the environment variables directly
+  clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+  clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+  secret: process.env.KEYSTATIC_SECRET,
 });
