@@ -3,10 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+  "dev": "astro dev",
+  "start": "astro dev",
+  "build": "node scripts/patch-keystatic.cjs && astro build",  <-- UPDATE THIS LINE
+  "preview": "astro preview",
+  "astro": "astro",
+  "postinstall": "node scripts/patch-keystatic.cjs"           <-- ADD THIS LINE
   },
   "dependencies": {
     "@astrojs/markdoc": "^0.15.10",
